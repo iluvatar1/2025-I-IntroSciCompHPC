@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 
-typedef float REAL;
+typedef double REAL;
 
 int factorial(int n);
 REAL fnaive(REAL x, int N);
@@ -17,7 +17,7 @@ int main(void)
               << "\t" << fnaive(x, NMAX)
               << "\t" << std::fabs(fnaive(x, NMAX) - exact)/exact
               << "\t" << fsmart(x, NMAX)
-              //<< "\t" << std::fabs(fsmart(x, NMAX) - exact)/exact
+              << "\t" << std::fabs(fsmart(x, NMAX) - exact)/exact
               << std::endl;
   }
   return 0;
@@ -33,6 +33,13 @@ REAL fnaive(REAL x, int N)
   return suma;  
 }
 
+/*
+term(k) = std::pow(-x, k)/factorial(k);
+term(k+1) = std::pow(-x, k+1)/factorial(k+1) = (-x)*std::pow(-x, k)/((k+1)*factorial(k));
+term(k+1) = (-x/(k+1)) * std::pow(-x, k)/(factorial(k) = (-x/(k+1)) * term(k)
+
+*/
+
 int factorial(int n)
 {
   if (n <= 0) return 1;
@@ -41,5 +48,10 @@ int factorial(int n)
 
 REAL fsmart(REAL x, int N)
 {
-    //TODO
+  REAL term = 1, suma = 1;
+  for(int k = 0; k < N; ++k){
+    term *= (-x)/(k+1);
+    suma += term;
+  }
+  return suma;
 }

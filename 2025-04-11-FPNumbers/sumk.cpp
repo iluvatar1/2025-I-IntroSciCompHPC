@@ -11,7 +11,9 @@ int main(void)
     std::cout.precision(7);
     std::cout.setf(std::ios::scientific);
 
-    std::cout << sumk(1) << "\n";
+    for (int k = 1; k <= 1000; k++) {
+        std::cout << k << "\t" << sumk(k) << "\n";
+    }
 
     return 0;
 }

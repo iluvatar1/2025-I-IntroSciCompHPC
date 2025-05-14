@@ -1,2 +1,3 @@
 #pragma once
-int factorial(int n);
+#include <iostream>
+long factorial(long n);

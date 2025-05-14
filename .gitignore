@@ -8,3 +8,7 @@ a.out
 *.gdb_history
 *.supp
 lcov-report/
+*gcov
+coverage*
+*.gcda
+*.gcno

@@ -5,3 +5,6 @@ a.out
 *~
 *.txt
 *.pdf
+*.gdb_history
+*.supp
+lcov-report/

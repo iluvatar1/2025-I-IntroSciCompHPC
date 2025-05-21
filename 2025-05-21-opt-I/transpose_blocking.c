@@ -70,3 +70,23 @@ int main(int argc, char **argv){
 
     return 0;
 }
+
+/*
+
+explorar como dependen los tiempos respecto al tamanho de la matriz, block size, y optimizacion
+
+Fijo: O0, MSIZE = 512, variar csize -> 1, ... , MSIZE, multiplicando de a 2
+
+gcc -O0 ....c
+./a.out 512 1
+./a.out 512 2
+./a.out 512 4
+./a.out 512 8
+...
+./a.out 512 512
+
+OPT=0; 
+gcc -O$OPT ....c
+MSIZE=512; 
+for ((csize=1; csize <= $MSIZE; csize *= 2)); do echo -n $MSIZE $csize " "; ./a.out $MSIZE $csize; done > data-$OPT.txt
+*/

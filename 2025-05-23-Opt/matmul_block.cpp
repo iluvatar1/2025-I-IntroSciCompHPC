@@ -24,11 +24,17 @@ void matrix_mult_traditional(double** A, double** B, double** C, int N);
 // Uses tiling/blocking for better cache performance.
 void matrix_mult_blocking(double** A, double** B, double** C, int N, int BLOCK_SIZE);
 
-int main() {
-    srand(10);
+int main(int argc , char **argv) {
+    if (argc != 4) {
+        std::cerr << "Bad args. Usage:\n";
+        std::cerr << argv[0] << " N BSIZE SEED\n";
+        return 1;
+    }
 
-    const int N = 1024; // Dimension of the matrices, try larger values like 512 or 1024 to see performance difference
-    const int BLOCK_SIZE = 32; // Dimension of the blocks
+    srand(std::atoi(argv[3]));
+
+    const int N = std::atoi(argv[1]); // Dimension of the matrices, try larger values like 512 or 1024 to see performance difference
+    const int BLOCK_SIZE = std::atoi(argv[2]); // Dimension of the blocks
 
     // --- Allocate Matrices ---
     double** A = allocate_matrix(N);
@@ -48,14 +54,14 @@ int main() {
     print_matrix(B, N);
     */
     
-    // --- Perform Traditional Multiplication ---
-    auto start_trad = std::chrono::high_resolution_clock::now();
-    matrix_mult_traditional(A, B, C_traditional, N);
-    auto end_trad = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff_trad = end_trad - start_trad;
+    // // --- Perform Traditional Multiplication ---
+    // auto start_trad = std::chrono::high_resolution_clock::now();
+    // matrix_mult_traditional(A, B, C_traditional, N);
+    // auto end_trad = std::chrono::high_resolution_clock::now();
+    // std::chrono::duration<double> diff_trad = end_trad - start_trad;
 
-    std::cout << "\n--- Result from Traditional Multiplication (" << diff_trad.count() << " s) ---" << std::endl;
-    //print_matrix(C_traditional, N);
+    // std::cout << "\n--- Result from Traditional Multiplication (" << diff_trad.count() << " s) ---" << std::endl;
+    // //print_matrix(C_traditional, N);
 
     // --- Perform Blocked Multiplication ---
     auto start_block = std::chrono::high_resolution_clock::now();
@@ -63,7 +69,8 @@ int main() {
     auto end_block = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_block = end_block - start_block;
 
-    std::cout << "\n--- Result from Blocked Multiplication (" << diff_block.count() << " s) ---" << std::endl;
+    //std::cout << "\n--- Result from Blocked Multiplication (" << diff_block.count() << " s) ---" << std::endl;
+    std::cout << N << "  " << BLOCK_SIZE << "  " << diff_block.count() << "\n";
     //print_matrix(C_blocked, N);
 
 

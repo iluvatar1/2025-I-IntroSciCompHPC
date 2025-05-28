@@ -1,5 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
+#include <chrono>
+#include <iostream>
 
 /*
   Tests cache misses.
@@ -20,22 +22,44 @@ int main(int argc, char **argv)
 
   printf("Operating on matrix of size %ld by %ld\n", sI, sJ);
 
+  std::chrono::duration<double> diff;
+  
+  auto start = std::chrono::steady_clock::now();
   long *arr = new long[sI*sJ]; // double array.
-
+  auto end = std::chrono::steady_clock::now();
+  diff = end-start;
+  std::cout << diff.count() << "\n"; 
+  
   // option 1
+  start = std::chrono::steady_clock::now();
   option1(arr, sI, sJ);
+  end = std::chrono::steady_clock::now();
+  diff = end-start;
+  std::cout << diff.count() << "\n"; 
       
   // option 2
+  start = std::chrono::steady_clock::now();
   option2(arr, sI, sJ);
+  end = std::chrono::steady_clock::now();
+  diff = end-start;
+  std::cout << diff.count() << "\n"; 
 
   // option 3
+  start = std::chrono::steady_clock::now();
   option3(arr, sI, sJ);
+  end = std::chrono::steady_clock::now();
+  diff = end-start;
+  std::cout << diff.count() << "\n"; 
 
   // why this?
   printf("%ld\n", arr[0]);
 
   // free memory
+  start = std::chrono::steady_clock::now();
   delete [] arr; 
+  end = std::chrono::steady_clock::now();
+  diff = end-start;
+  std::cout << diff.count() << "\n"; 
 
   return 0;
 }

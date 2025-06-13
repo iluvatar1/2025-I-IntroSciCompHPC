@@ -1,5 +1,8 @@
 #include <iostream>
 #include <eigen3/Eigen/Dense>
+#include <chrono>
+#include <ctime>
+
 
 void stats(const int size, const int reps, // input parameters
                double & mean_wtime, double & sigma_wtime, // output
@@ -36,9 +39,22 @@ void stats(const int size, const int reps, // input parameters
         Eigen::MatrixXd A = Eigen::MatrixXd::Random(size, size);
         Eigen::MatrixXd b = Eigen::MatrixXd::Random(size, 1);
         // cronometro para wtime y para cpu time
+        auto wstart{std::chrono::steady_clock::now()};
+        std::clock_t c_start = std::clock();
         Eigen::MatrixXd x = A.partialPivLu().solve(b);
+        std::clock_t c_end = std::clock();
+        auto wend{std::chrono::steady_clock::now()};
         
         // anhadir a suma_wtime, suma_wtime2...
+        std::chrono::duration<double> elapsed_seconds{wend - wstart};
+        double aux = elapsed_seconds.count();
+        suma_wtime += aux;
+        suma_wtime2 += aux*aux;
+        aux = (c_end - c_start) / CLOCKS_PER_SEC;
+        suma_ctime += aux;
+        suma_ctime2 += aux*aux;
+        
+        // force matrix use
         std::cerr << x(0, 0) << "\n";
     }
 

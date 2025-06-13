@@ -12,3 +12,10 @@ lcov-report/
 coverage*
 *.gcda
 *.gcno
+*old
+*out
+cachegrind*
+*folded
+perf.*
+*svg
+*.perf
